@@ -13,6 +13,33 @@
 	<script>
 		const canvas = document.getElementById("canvas");
 		const ctx = canvas.getContext("2d");
+
+		let bola = { x: 30, y: 30, radius: 10, color: "red"};
+
+		function drawBola(){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.beginPath();
+			ctx.arc(bola.x, bola.y, bola.radius, 0, 2 * Math.PI);
+			ctx.fillStyle = bola.color;
+			ctx.fill();
+		}
+
+		function moveBola(dx, dy){
+			bola.x += dx;
+			bola.y += dy;
+			drawBola();
+		}
+
+		document.addEventListener("keydown", event =>{
+			switch(event.key){
+			case "ArrowUp": moveBola(0, -20); break;
+			case "ArrowDown": moveBola(0, 20); break;
+			case "ArrowLeft": moveBola(-20, 0); break;
+			case "ArrowRight": moveBola(20, 0); break;
+			}
+		});
+
+		drawBola();
 	</script>
 </body>
 </html>
