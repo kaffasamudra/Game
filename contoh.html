@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Langkah 4: Menambahkan Tujuan</title>
+</head>
+<body>
+    <h1>Langkah 4: Menambahkan Tujuan</h1>
+    <canvas id="mazeCanvas" width="400" height="400" style="border:1px solid black;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("mazeCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let ball = { x: 30, y: 30, radius: 10, color: "blue" };
+        const walls = [{ x: 50, y: 20, width: 10, height: 300 }];
+        const goal = { x: 350, y: 350, width: 30, height: 30, color: "green" };
+
+        // Gambar permainan
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dinding
+            ctx.fillStyle = "black";
+            walls.forEach(wall => {
+                ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
+            });
+
+            // Tujuan
+            ctx.fillStyle = goal.color;
+            ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
+
+            // Bola
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+        }
+
+        // Gerakan bola
+        function moveBall(dx, dy) {
+            ball.x += dx;
+            ball.y += dy;
+
+            // Cek jika bola mencapai tujuan
+            if (ball.x > goal.x && ball.x < goal.x + goal.width &&
+                ball.y > goal.y && ball.y < goal.y + goal.height) {
+                alert("Selamat! Kamu Menang!");
+                ball.x = 30; ball.y = 30; // Reset posisi bola
+            }
+
+            drawGame();
+        }
+
+        document.addEventListener("keydown", event => {
+            switch (event.key) {
+                case "ArrowUp": moveBall(0, -10); break;
+                case "ArrowDown": moveBall(0, 10); break;
+                case "ArrowLeft": moveBall(-10, 0); break;
+                case "ArrowRight": moveBall(10, 0); break;
+            }
+        });
+
+        drawGame();
+    </script>
+</body>
+</html>
